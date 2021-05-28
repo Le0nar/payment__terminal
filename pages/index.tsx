@@ -1,6 +1,7 @@
-import { MouseEventHandler, ReactEventHandler, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { IOperator } from "./../interfaces/operator";
+import { addOperatorToDataBase } from './../utils/addOperatorToDB';
 
 const MianPage = () => {
   const [inputValue, setInputValue] = useState<string>("");
@@ -18,7 +19,11 @@ const MianPage = () => {
       id: operatorsList.length + 1,
     };
     setOpearatorsList([...operatorsList, operator]);
+    addOperatorToDataBase(inputValue)
   };
+
+
+  
   return (
     <div>
       <h1>Выберите оператора</h1>
