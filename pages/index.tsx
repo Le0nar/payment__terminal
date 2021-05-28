@@ -2,6 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { IOperator } from "./../interfaces/operator";
 import { addOperatorToDataBase } from './../utils/addOperatorToDB';
+import { MainLayout } from './../components/MainLoyout';
 
 const MianPage = ({operators}) => {
   const [inputValue, setInputValue] = useState<string>("");
@@ -19,7 +20,7 @@ const MianPage = ({operators}) => {
   };
   
   return (
-    <div>
+    <MainLayout>
       <h1>Выберите оператора</h1>
       <ul>
         {operatorsList.map((el) => (
@@ -36,7 +37,7 @@ const MianPage = ({operators}) => {
         />
         <div onClick={addOpearator}>+++</div>
       </div>
-    </div>
+    </MainLayout>
   );
 };
 

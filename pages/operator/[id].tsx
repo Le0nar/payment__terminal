@@ -1,6 +1,7 @@
 import { IOperator } from "./../../interfaces/operator";
 import { useState } from 'react';
 import { IPaymentData } from './../../interfaces/paymentData';
+import { MainLayout } from './../../components/MainLoyout';
 
 
 
@@ -25,7 +26,7 @@ const OperatorPage = ({ operator }) => {
   }
 
   return (
-    <>
+    <MainLayout title={`Пополнение средств | ${operator.name}`}>
       {operator.name}
       <div>
         <label htmlFor="telephone">Введите номер телефона</label>
@@ -51,7 +52,7 @@ const OperatorPage = ({ operator }) => {
         />
       </div>
       <button onClick={checkParameters}>Оплатить</button>
-    </>
+    </MainLayout>
   );
 };
 
