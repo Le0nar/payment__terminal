@@ -3,13 +3,9 @@ import Link from "next/link";
 import { IOperator } from "./../interfaces/operator";
 import { addOperatorToDataBase } from './../utils/addOperatorToDB';
 
-const MianPage = () => {
+const MianPage = ({operators}) => {
   const [inputValue, setInputValue] = useState<string>("");
-  const [operatorsList, setOpearatorsList] = useState<IOperator[]>([
-    { name: "МТС", id: 1 },
-    { name: "Билайн", id: 2 },
-    { name: "Мегафон", id: 3 },
-  ]);
+  const [operatorsList, setOpearatorsList] = useState<IOperator[]>([...operators]);
   const addOpearator = (): void => {
     if (inputValue === "") {
       return;
@@ -21,8 +17,6 @@ const MianPage = () => {
     setOpearatorsList([...operatorsList, operator]);
     addOperatorToDataBase(inputValue)
   };
-
-
   
   return (
     <div>
@@ -30,7 +24,7 @@ const MianPage = () => {
       <ul>
         {operatorsList.map((el) => (
           <li key={el.id}>
-            <Link href="/">{el.name}</Link>
+            <Link href={`/operator/[id]`} as={`/operator/${el.id}`}>{el.name}</Link>
           </li>
         ))}
       </ul>
@@ -47,3 +41,11 @@ const MianPage = () => {
 };
 
 export default MianPage;
+
+export async function getServerSideProps({query, req}) {
+  const response = await fetch("http://localhost:4300/operators");
+  const operators = await response.json();
+
+  return {props: {operators}}
+  
+}
