@@ -31,3 +31,9 @@ export const addOperatorToLocalStorage = (operator: IOperator): void => {
   operatorsList.push(operator);
   localStorage.setItem("operatorsList", JSON.stringify(operatorsList));
 };
+
+export const getOperatorFromID = (id: number): IOperator => {
+  const operatorsList: IOperator[] = getOperatorsList();
+  const currentOperator:IOperator = operatorsList.find((el) => el.id === id);
+  return currentOperator;
+};

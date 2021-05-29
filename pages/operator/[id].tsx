@@ -1,25 +1,34 @@
 import { IOperator } from "./../../interfaces/operator";
-import { useState } from 'react';
-import { IPaymentData } from './../../interfaces/paymentData';
-import { MainLayout } from './../../components/MainLoyout';
+import { useEffect, useState } from "react";
+import { IPaymentData } from "./../../interfaces/paymentData";
+import { MainLayout } from "./../../components/MainLoyout";
+import { getOperatorFromID } from "../../utils/operatorsList";
+import { useRouter } from "next/router";
 
-
-
-const OperatorPage = ({ operator }) => {
+const OperatorPage = () => {
+  const [operator, setOperator] = useState<IOperator>();
   const [paymnetData, setPaymentData] = useState<IPaymentData>({
     telephone: "",
-    moneyAmount: 250
+    moneyAmount: 250,
   });
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const currentOperator = getOperatorFromID(+router.query.id);
+    //TODO: if (!currentOperator) redirect + clear storage
+    setOperator(currentOperator);
+  }, [router]);
 
   const changePaymentData = (event, key) => {
     let value: string | number;
-    key === "telephone" ? value = event.target.value : value = +event.target.value;
-    setPaymentData({...paymnetData, [key]: value})
-  }
+    key === "telephone"
+      ? (value = event.target.value)
+      : (value = +event.target.value);
+    setPaymentData({ ...paymnetData, [key]: value });
+  };
 
-  const checkParameters = () => {
-    
-  }
+  const checkParameters = () => {};
 
   if (!operator) {
     return <p>Loading...</p>;
@@ -31,8 +40,8 @@ const OperatorPage = ({ operator }) => {
       <div>
         <label htmlFor="telephone">Введите номер телефона</label>
         <input
-          type="tel" 
-          name="phone" 
+          type="tel"
+          name="phone"
           pattern="[789][0-9]{9}"
           required
           onChange={(e) => changePaymentData(e, "telephone")}
@@ -57,11 +66,3 @@ const OperatorPage = ({ operator }) => {
 };
 
 export default OperatorPage;
-
-OperatorPage.getInitialProps = async ({ query, req }) => {
-  const response = await fetch(`http://localhost:4300/operators/${query.id}`);
-  const operator: IOperator = await response.json();
-  return {
-    operator,
-  };
-};
