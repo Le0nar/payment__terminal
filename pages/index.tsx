@@ -1,12 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { IOperator } from "./../interfaces/operator";
-import { addOperatorToDataBase } from './../utils/addOperatorToDB';
-import { MainLayout } from './../components/MainLoyout';
+import { MainLayout } from "./../components/MainLoyout";
+import {
+  getOperatorsList,
+  initialOperatorsList,
+  addOperatorToLocalStorage,
+} from "../utils/operatorsList";
 
-const MianPage = ({operators}) => {
+const MianPage = () => {
   const [inputValue, setInputValue] = useState<string>("");
-  const [operatorsList, setOpearatorsList] = useState<IOperator[]>([...operators]);
+  const [operatorsList, setOpearatorsList] =
+    useState<IOperator[]>(initialOperatorsList);
+
+  useEffect(() => {
+    setOpearatorsList(getOperatorsList());
+  }, []);
+
   const addOpearator = (): void => {
     if (inputValue === "") {
       return;
@@ -16,16 +26,19 @@ const MianPage = ({operators}) => {
       id: operatorsList.length + 1,
     };
     setOpearatorsList([...operatorsList, operator]);
-    addOperatorToDataBase(inputValue)
+    setInputValue("");
+    addOperatorToLocalStorage(operator);
   };
-  
+
   return (
     <MainLayout>
       <h1>Выберите оператора</h1>
       <ul>
         {operatorsList.map((el) => (
           <li key={el.id}>
-            <Link href={`/operator/[id]`} as={`/operator/${el.id}`}>{el.name}</Link>
+            <Link href={`/operator/[id]`} as={`/operator/${el.id}`}>
+              {el.name}
+            </Link>
           </li>
         ))}
       </ul>
@@ -34,6 +47,7 @@ const MianPage = ({operators}) => {
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
+          placeholder="Добавить оператора"
         />
         <div onClick={addOpearator}>+++</div>
       </div>
@@ -42,11 +56,3 @@ const MianPage = ({operators}) => {
 };
 
 export default MianPage;
-
-export async function getServerSideProps({query, req}) {
-  const response = await fetch("http://localhost:4300/operators");
-  const operators = await response.json();
-
-  return {props: {operators}}
-  
-}
