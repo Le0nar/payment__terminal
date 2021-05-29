@@ -4,6 +4,7 @@ import { IPaymentData } from "./../../interfaces/paymentData";
 import { MainLayout } from "./../../components/MainLoyout";
 import { getOperatorFromID } from "../../utils/operatorsList";
 import { useRouter } from "next/router";
+import { makePayment } from "../../utils/makePayment";
 
 const OperatorPage = () => {
   const [operator, setOperator] = useState<IOperator>();
@@ -15,7 +16,8 @@ const OperatorPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const currentOperator = getOperatorFromID(+router.query.id);
+    const operatorID: number = +router.query.id;
+    const currentOperator: IOperator = getOperatorFromID(operatorID);
     //TODO: if (!currentOperator) redirect + clear storage
     setOperator(currentOperator);
   }, [router]);
@@ -28,7 +30,13 @@ const OperatorPage = () => {
     setPaymentData({ ...paymnetData, [key]: value });
   };
 
-  const checkParameters = () => {};
+  const checkParameters = () => {
+    // TODO: add validtation
+    if (paymnetData.telephone === "") {
+      return;
+    }
+    makePayment(paymnetData);
+  };
 
   if (!operator) {
     return <p>Loading...</p>;
