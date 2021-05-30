@@ -41,7 +41,7 @@ const OperatorPage = () => {
     if (paymnetData.telephone === "") {
       return;
     }
-    makePayment(paymnetData, popup, setPopup);
+    makePayment(paymnetData, popup, setPopup, router);
   };
 
   if (!operator) {

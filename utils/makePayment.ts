@@ -1,5 +1,6 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
+import { NextRouter } from "next/router";
 import { Dispatch, SetStateAction } from "react";
 import { IPaymentData } from "./../interfaces/paymentData";
 import { IPopup } from "./../interfaces/popup";
@@ -7,7 +8,8 @@ import { IPopup } from "./../interfaces/popup";
 export function makePayment(
   parameters: IPaymentData,
   popup: IPopup,
-  setPopup: Dispatch<SetStateAction<IPopup>>
+  setPopup: Dispatch<SetStateAction<IPopup>>,
+  router: NextRouter
 ) {
   const mock = new MockAdapter(axios);
 
@@ -24,7 +26,7 @@ export function makePayment(
     .get("/endpoint")
     .then((resp) => {
       console.log(resp.data);
-      showModal(popup, setPopup, true);
+      showModal(popup, setPopup, true, router);
     })
     .catch((err) => {
       console.log("нет ответа");
@@ -35,13 +37,14 @@ export function makePayment(
 export const showModal = (
   popup: IPopup,
   setPopup: Dispatch<SetStateAction<IPopup>>,
-  isSuccesRequest: boolean
+  isSuccesRequest: boolean,
+  router?: NextRouter
 ) => {
   if (isSuccesRequest) {
     setPopup({ ...popup, isSuccesPopupActive: true });
     setTimeout(() => {
       setPopup({ ...popup, isSuccesPopupActive: false });
-      // TODO: redirect to main page
+      router.push("/");
     }, 3000);
   } else {
     setPopup({ ...popup, isErrorPopupActive: true });
