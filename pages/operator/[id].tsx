@@ -7,8 +7,9 @@ import { useRouter } from "next/router";
 import { makePayment } from "../../utils/makePayment";
 import PopupWindow from "../../components/PopupWindow";
 import { IPopup } from "./../../interfaces/popup";
-import { IPrompt } from './../../interfaces/prompt';
-import { validateTelephone } from './../../utils/validation';
+import { validateTelephone } from "./../../utils/validation";
+import PhoneInput from "./../../components/PhoneInput";
+import MoneyInput from "../../components/MoneyInput";
 
 const OperatorPage = () => {
   const [operator, setOperator] = useState<IOperator>();
@@ -20,17 +21,14 @@ const OperatorPage = () => {
     isSuccesPopupActive: false,
     isErrorPopupActive: false,
   });
-  const [prompt, setPrompt] = useState<IPrompt>({
-    isTelephonePromptActive: false,
-    isMoneyPromptActive: false
-  });
+  const [isPromptActive, setIsPromptActive] = useState<boolean>(false);
 
   const router = useRouter();
 
   useEffect(() => {
     const isValidTelephone: boolean = validateTelephone(paymnetData.telephone);
-    setPrompt({ ...prompt, isTelephonePromptActive: !isValidTelephone });
-  }, [paymnetData])
+    setIsPromptActive(!isValidTelephone);
+  }, [paymnetData]);
 
   useEffect(() => {
     const operatorID: number = +router.query.id;
@@ -42,7 +40,7 @@ const OperatorPage = () => {
   const changePaymentData = (event, key) => {
     let value: string | number;
     key === "telephone"
-      ? (value = event.target.value.replace(/\D/g, ''))
+      ? (value = event.target.value.replace(/\D/g, ""))
       : (value = +event.target.value);
     setPaymentData({ ...paymnetData, [key]: value });
   };
@@ -62,30 +60,15 @@ const OperatorPage = () => {
     <>
       <MainLayout title={`Пополнение средств | ${operator.name}`}>
         {operator.name}
-        <div>
-          <label htmlFor="telephone">Введите номер телефона</label>
-          <input
-            type="tel"
-            name="phone"
-            pattern="[789][0-9]{9}"
-            required
-            onChange={(e) => changePaymentData(e, "telephone")}
-            value={paymnetData.telephone}
-            id="telephone"
-            placeholder="89992223322"
-          />
-          {((paymnetData.telephone !== "") && prompt.isTelephonePromptActive) && <span>Неверно заполнено поле</span>}
-        </div>
-        <div>
-          <label htmlFor="moneyAmount">Введите суму от 1р до 1000р</label>
-          <input
-            type="number"
-            onChange={(e) => changePaymentData(e, "moneyAmount")}
-            value={paymnetData.moneyAmount}
-            id="moneyAmount"
-            placeholder="250"
-          />
-        </div>
+        <PhoneInput
+          paymnetData={paymnetData}
+          changePaymentData={changePaymentData}
+          isPromptActive={isPromptActive}
+        />
+        <MoneyInput
+          paymnetData={paymnetData}
+          changePaymentData={changePaymentData}
+        />
         <button onClick={checkParameters}>Оплатить</button>
       </MainLayout>
       {popup.isSuccesPopupActive && <PopupWindow isSuccessfulRequest={true} />}
