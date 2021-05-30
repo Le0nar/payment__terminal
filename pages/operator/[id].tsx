@@ -7,6 +7,8 @@ import { useRouter } from "next/router";
 import { makePayment } from "../../utils/makePayment";
 import PopupWindow from "../../components/PopupWindow";
 import { IPopup } from "./../../interfaces/popup";
+import { IPrompt } from './../../interfaces/prompt';
+import { validateTelephone } from './../../utils/validation';
 
 const OperatorPage = () => {
   const [operator, setOperator] = useState<IOperator>();
@@ -18,8 +20,17 @@ const OperatorPage = () => {
     isSuccesPopupActive: false,
     isErrorPopupActive: false,
   });
+  const [prompt, setPrompt] = useState<IPrompt>({
+    isTelephonePromptActive: false,
+    isMoneyPromptActive: false
+  });
 
   const router = useRouter();
+
+  useEffect(() => {
+    const isValidTelephone: boolean = validateTelephone(paymnetData.telephone);
+    setPrompt({ ...prompt, isTelephonePromptActive: !isValidTelephone });
+  }, [paymnetData])
 
   useEffect(() => {
     const operatorID: number = +router.query.id;
@@ -31,13 +42,12 @@ const OperatorPage = () => {
   const changePaymentData = (event, key) => {
     let value: string | number;
     key === "telephone"
-      ? (value = event.target.value)
+      ? (value = event.target.value.replace(/\D/g, ''))
       : (value = +event.target.value);
     setPaymentData({ ...paymnetData, [key]: value });
   };
 
   const checkParameters = () => {
-    // TODO: add validtation
     if (paymnetData.telephone === "") {
       return;
     }
@@ -64,6 +74,7 @@ const OperatorPage = () => {
             id="telephone"
             placeholder="89992223322"
           />
+          {((paymnetData.telephone !== "") && prompt.isTelephonePromptActive) && <span>Неверно заполнено поле</span>}
         </div>
         <div>
           <label htmlFor="moneyAmount">Введите суму от 1р до 1000р</label>
