@@ -3,15 +3,20 @@ import { IPaymentData } from "./../interfaces/paymentData";
 
 interface PhoneInputProps {
   paymnetData: IPaymentData;
-  changePaymentData: (event, key) => void;
+  setPaymentData: (paymentData: IPaymentData) => void;
   isPromptActive: boolean;
 }
 
 const PhoneInput: React.FC<PhoneInputProps> = ({
   paymnetData,
-  changePaymentData,
+  setPaymentData,
   isPromptActive,
 }) => {
+  const handleChange = (event) => {
+    let value: string = event.target.value.replace(/\D/g, "");
+    setPaymentData({ ...paymnetData, telephone: value });
+  };
+
   return (
     <div>
       <label htmlFor="telephone">Введите номер телефона</label>
@@ -20,7 +25,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
         name="phone"
         pattern="[789][0-9]{9}"
         required
-        onChange={(e) => changePaymentData(e, "telephone")}
+        onChange={handleChange}
         value={paymnetData.telephone}
         id="telephone"
         placeholder="89992223322"

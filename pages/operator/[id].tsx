@@ -21,13 +21,13 @@ const OperatorPage = () => {
     isSuccesPopupActive: false,
     isErrorPopupActive: false,
   });
-  const [isPromptActive, setIsPromptActive] = useState<boolean>(false);
+  const [isPhonePromptActive, setPhoneIsPromptActive] = useState<boolean>(false);
 
   const router = useRouter();
 
   useEffect(() => {
     const isValidTelephone: boolean = validateTelephone(paymnetData.telephone);
-    setIsPromptActive(!isValidTelephone);
+    setPhoneIsPromptActive(!isValidTelephone);
   }, [paymnetData]);
 
   useEffect(() => {
@@ -37,16 +37,8 @@ const OperatorPage = () => {
     setOperator(currentOperator);
   }, [router]);
 
-  const changePaymentData = (event, key) => {
-    let value: string | number;
-    key === "telephone"
-      ? (value = event.target.value.replace(/\D/g, ""))
-      : (value = +event.target.value);
-    setPaymentData({ ...paymnetData, [key]: value });
-  };
-
   const checkParameters = () => {
-    if (paymnetData.telephone === "") {
+    if (isPhonePromptActive || paymnetData.moneyAmount === 0) {
       return;
     }
     makePayment(paymnetData, popup, setPopup, router);
@@ -62,12 +54,12 @@ const OperatorPage = () => {
         {operator.name}
         <PhoneInput
           paymnetData={paymnetData}
-          changePaymentData={changePaymentData}
-          isPromptActive={isPromptActive}
+          setPaymentData={setPaymentData}
+          isPromptActive={isPhonePromptActive}
         />
         <MoneyInput
           paymnetData={paymnetData}
-          changePaymentData={changePaymentData}
+          setPaymentData={setPaymentData}
         />
         <button onClick={checkParameters}>Оплатить</button>
       </MainLayout>
