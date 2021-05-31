@@ -1,6 +1,11 @@
 import React from "react";
 import { IPaymentData } from "./../interfaces/paymentData";
-import { StyledInputWrapper, StyledLabel, StyledInput, StyledPrompt } from './../styles/OperatorPageStyles';
+import {
+  StyledInputWrapper,
+  StyledLabel,
+  StyledInput,
+  StyledPrompt,
+} from "./../styles/OperatorPageStyles";
 
 interface PhoneInputProps {
   paymnetData: IPaymentData;

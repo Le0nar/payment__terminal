@@ -36,7 +36,6 @@ const OperatorPage = () => {
   useEffect(() => {
     const operatorID: number = +router.query.id;
     const currentOperator: IOperator = getOperatorFromID(operatorID);
-    //TODO: if (!currentOperator) redirect + clear storage
     setOperator(currentOperator);
   }, [router]);
 

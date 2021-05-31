@@ -32,14 +32,17 @@ export const addOperatorToLocalStorage = (operator: IOperator): void => {
   localStorage.setItem("operatorsList", JSON.stringify(operatorsList));
 };
 
-export const deleteOperatorToLocalStorage = (operator: IOperator, setOpearatorsList): void => {
+export const deleteOperatorToLocalStorage = (
+  operator: IOperator,
+  setOpearatorsList
+): void => {
   const operatorsList: IOperator[] = JSON.parse(
     localStorage.getItem("operatorsList")
   );
   const element = operatorsList.find((el) => el.id === operator.id);
   const index = operatorsList.indexOf(element);
   operatorsList.splice(index, 1);
-  setOpearatorsList(operatorsList)
+  setOpearatorsList(operatorsList);
   localStorage.setItem("operatorsList", JSON.stringify(operatorsList));
 };
 
