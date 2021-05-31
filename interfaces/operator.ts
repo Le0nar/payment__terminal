@@ -1,4 +1,5 @@
 export interface IOperator {
     name: string,
-    id: number
+    id: number,
+    isRemovable?: boolean;
 }
