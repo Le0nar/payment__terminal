@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { IPaymentData } from "./../interfaces/paymentData";
+import { StyledInputMoney, StyledInputWrapper, StyledLabel, StyledPrompt } from './../styles/OperatorPageStyles';
 
 interface MoneyInputProps {
   paymnetData: IPaymentData;
@@ -31,17 +32,17 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
   }, [input]);
 
   return (
-    <div>
-      <label htmlFor="moneyAmount">Введите суму от 1р до 1000р</label>
-      <input
+    <StyledInputWrapper>
+      <StyledLabel htmlFor="moneyAmount">Введите суму от 1р до 1000р</StyledLabel>
+      <StyledInputMoney
         ref={input}
         type="number"
         onChange={handleChange}
         id="moneyAmount"
         defaultValue="250"
       />
-      {isPromptActive && <span>Некорректное значение</span>}
-    </div>
+      {isPromptActive && <StyledPrompt>Некорректное значение</StyledPrompt>}
+    </StyledInputWrapper>
   );
 };
 

@@ -10,6 +10,8 @@ import { IPopup } from "./../../interfaces/popup";
 import { validateTelephone } from "./../../utils/validation";
 import PhoneInput from "./../../components/PhoneInput";
 import MoneyInput from "../../components/MoneyInput";
+import { WindowTitle } from "./../../styles/WindowTitleStyles";
+import { StyledSendBtn } from "../../styles/OperatorPageStyles";
 
 const OperatorPage = () => {
   const [operator, setOperator] = useState<IOperator>();
@@ -21,7 +23,8 @@ const OperatorPage = () => {
     isSuccesPopupActive: false,
     isErrorPopupActive: false,
   });
-  const [isPhonePromptActive, setPhoneIsPromptActive] = useState<boolean>(false);
+  const [isPhonePromptActive, setPhoneIsPromptActive] =
+    useState<boolean>(false);
 
   const router = useRouter();
 
@@ -51,20 +54,21 @@ const OperatorPage = () => {
   return (
     <>
       <MainLayout title={`Пополнение средств | ${operator.name}`}>
-        {operator.name}
+        <WindowTitle>{operator.name}</WindowTitle>
         <PhoneInput
           paymnetData={paymnetData}
           setPaymentData={setPaymentData}
           isPromptActive={isPhonePromptActive}
         />
-        <MoneyInput
-          paymnetData={paymnetData}
-          setPaymentData={setPaymentData}
-        />
-        <button onClick={checkParameters}>Оплатить</button>
+        <MoneyInput paymnetData={paymnetData} setPaymentData={setPaymentData} />
+        <StyledSendBtn onClick={checkParameters}>Оплатить</StyledSendBtn>
+        {popup.isSuccesPopupActive && (
+          <PopupWindow isSuccessfulRequest={true} />
+        )}
+        {popup.isErrorPopupActive && (
+          <PopupWindow isSuccessfulRequest={false} />
+        )}
       </MainLayout>
-      {popup.isSuccesPopupActive && <PopupWindow isSuccessfulRequest={true} />}
-      {popup.isErrorPopupActive && <PopupWindow isSuccessfulRequest={false} />}
     </>
   );
 };

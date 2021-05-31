@@ -7,6 +7,8 @@ import {
   initialOperatorsList,
   addOperatorToLocalStorage,
 } from "../utils/operatorsList";
+import { LinkStyle, StyledUL, StyledInput, OpearotrWrapper, StyledAddBtn } from "../styles/MainPageStyles";
+import { WindowTitle } from './../styles/WindowTitleStyles';
 
 const MianPage = () => {
   const [inputValue, setInputValue] = useState<string>("");
@@ -32,25 +34,26 @@ const MianPage = () => {
 
   return (
     <MainLayout>
-      <h1>Выберите оператора</h1>
-      <ul>
+      <WindowTitle>Выберите оператора</WindowTitle>
+      <StyledUL>
         {operatorsList.map((el) => (
           <li key={el.id}>
             <Link href={`/operator/[id]`} as={`/operator/${el.id}`}>
-              {el.name}
+              <LinkStyle>{el.name}</LinkStyle>
+              
             </Link>
           </li>
         ))}
-      </ul>
-      <div>
-        <input
+      </StyledUL>
+      <OpearotrWrapper>
+        <StyledInput
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          placeholder="Добавить оператора"
+          placeholder="Название"
         />
-        <div onClick={addOpearator}>+++</div>
-      </div>
+        <StyledAddBtn onClick={addOpearator}>Добавить</StyledAddBtn>
+      </OpearotrWrapper>
     </MainLayout>
   );
 };
