@@ -1,7 +1,8 @@
-import Link from 'next/link'
-import Head from 'next/head'
+import Head from "next/head";
+import { Container, StyledWrapper } from './../styles/MainLoyoutStyles';
 
-export function MainLayout({ children, title = 'Терминал оплаты' }) {
+
+export function MainLayout({ children, title = "Терминал оплаты" }) {
   return (
     <>
       <Head>
@@ -10,11 +11,9 @@ export function MainLayout({ children, title = 'Терминал оплаты' }
         <meta name="description" content="this is youtube tutorial for next" />
         <meta charSet="utf-8" />
       </Head>
-      <main>
-          <div>
-            {children}
-          </div>
-      </main>
+      <Container>
+        <StyledWrapper>{children}</StyledWrapper>
+      </Container>
     </>
-  )
+  );
 }

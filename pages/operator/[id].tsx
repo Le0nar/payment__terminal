@@ -21,7 +21,8 @@ const OperatorPage = () => {
     isSuccesPopupActive: false,
     isErrorPopupActive: false,
   });
-  const [isPhonePromptActive, setPhoneIsPromptActive] = useState<boolean>(false);
+  const [isPhonePromptActive, setPhoneIsPromptActive] =
+    useState<boolean>(false);
 
   const router = useRouter();
 
@@ -57,14 +58,16 @@ const OperatorPage = () => {
           setPaymentData={setPaymentData}
           isPromptActive={isPhonePromptActive}
         />
-        <MoneyInput
-          paymnetData={paymnetData}
-          setPaymentData={setPaymentData}
-        />
+        <MoneyInput paymnetData={paymnetData} setPaymentData={setPaymentData} />
         <button onClick={checkParameters}>Оплатить</button>
+
+        {popup.isSuccesPopupActive && (
+          <PopupWindow isSuccessfulRequest={true} />
+        )}
+        {popup.isErrorPopupActive && (
+          <PopupWindow isSuccessfulRequest={false} />
+        )}
       </MainLayout>
-      {popup.isSuccesPopupActive && <PopupWindow isSuccessfulRequest={true} />}
-      {popup.isErrorPopupActive && <PopupWindow isSuccessfulRequest={false} />}
     </>
   );
 };
