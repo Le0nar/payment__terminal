@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const LinkStyle = styled.div`
-  color: ${({ theme }) => theme.colors.primary};
+  color: #000;
   cursor: pointer;
   margin-bottom: 16px;
 `;

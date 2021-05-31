@@ -1,5 +1,6 @@
 import React from "react";
 import { IPaymentData } from "./../interfaces/paymentData";
+import { StyledInputWrapper, StyledLabel, StyledInput, StyledPrompt } from './../styles/OperatorPageStyles';
 
 interface PhoneInputProps {
   paymnetData: IPaymentData;
@@ -18,9 +19,9 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
   };
 
   return (
-    <div>
-      <label htmlFor="telephone">Введите номер телефона</label>
-      <input
+    <StyledInputWrapper>
+      <StyledLabel htmlFor="telephone">Введите номер телефона</StyledLabel>
+      <StyledInput
         type="tel"
         name="phone"
         pattern="[789][0-9]{9}"
@@ -31,9 +32,9 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
         placeholder="89992223322"
       />
       {paymnetData.telephone !== "" && isPromptActive && (
-        <span>Неверно заполнено поле</span>
+        <StyledPrompt>Неверно заполнено поле</StyledPrompt>
       )}
-    </div>
+    </StyledInputWrapper>
   );
 };
 

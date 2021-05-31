@@ -5,4 +5,5 @@ export const WindowTitle = styled.h1`
   font-size: 28px;
     font-weight: 500;
     color: #000;
+    text-align: center;
 `;
