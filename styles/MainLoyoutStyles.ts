@@ -5,6 +5,7 @@ export const Container = styled.div`
   margin: auto;
   height: 100vh;
   display: flex;
+  font-family: 'Roboto', sans-serif;
 `;
 
 export const StyledWrapper = styled.div`
@@ -17,5 +18,9 @@ export const StyledWrapper = styled.div`
 
   width: 500px;
   border: 2px solid ${({ theme }) => theme.colors.primary};
-  padding: 16px;
+  padding: 16px 32px;
+
+  @media (max-width: 769px) {
+    width: 300px;
+  }
 `;

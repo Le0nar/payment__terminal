@@ -52,7 +52,7 @@ const OperatorPage = () => {
   return (
     <>
       <MainLayout title={`Пополнение средств | ${operator.name}`}>
-        {operator.name}
+        <h1>{operator.name}</h1>
         <PhoneInput
           paymnetData={paymnetData}
           setPaymentData={setPaymentData}
