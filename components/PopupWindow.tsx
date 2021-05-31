@@ -2,7 +2,7 @@ import {
   StyledOverlay,
   StyledPopupErrorWindow,
   StyledPopupContent,
-  StyledPopupSuccesWindow
+  StyledPopupSuccesWindow,
 } from "./../styles/PopupWindowStyles";
 
 const PopupWindow = ({ isSuccessfulRequest }) => {

@@ -17,7 +17,7 @@ import {
   StyleOperator,
 } from "../styles/MainPageStyles";
 import { WindowTitle } from "./../styles/WindowTitleStyles";
-import { StyledDeleteBtn } from './../styles/MainPageStyles';
+import { StyledDeleteBtn } from "./../styles/MainPageStyles";
 
 const MianPage = () => {
   const [inputValue, setInputValue] = useState<string>("");
@@ -51,7 +51,15 @@ const MianPage = () => {
             <Link href={`/operator/[id]`} as={`/operator/${el.id}`}>
               <LinkStyle>{el.name}</LinkStyle>
             </Link>
-            {el.isRemovable && <StyledDeleteBtn onClick={() => deleteOperatorToLocalStorage(el, setOpearatorsList)}>Удалить</StyledDeleteBtn>}
+            {el.isRemovable && (
+              <StyledDeleteBtn
+                onClick={() =>
+                  deleteOperatorToLocalStorage(el, setOpearatorsList)
+                }
+              >
+                Удалить
+              </StyledDeleteBtn>
+            )}
           </StyleOperator>
         ))}
       </StyledUL>

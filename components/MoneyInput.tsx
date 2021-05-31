@@ -1,6 +1,11 @@
 import React, { useRef, useEffect, useState } from "react";
 import { IPaymentData } from "./../interfaces/paymentData";
-import { StyledInputMoney, StyledInputWrapper, StyledLabel, StyledPrompt } from './../styles/OperatorPageStyles';
+import {
+  StyledInputMoney,
+  StyledInputWrapper,
+  StyledLabel,
+  StyledPrompt,
+} from "./../styles/OperatorPageStyles";
 
 interface MoneyInputProps {
   paymnetData: IPaymentData;
@@ -11,7 +16,7 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
   paymnetData,
   setPaymentData,
 }) => {
-  const [isPromptActive, setIsPromptActive] = useState<boolean>(false)
+  const [isPromptActive, setIsPromptActive] = useState<boolean>(false);
   const input = useRef<HTMLInputElement>(null);
 
   const handleChange = () => {
@@ -19,21 +24,22 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
     if (inputValue < 1) input.current.value = "";
     if (inputValue > 1000) input.current.value = "1000";
     if (input.current.value === "") {
-      setIsPromptActive(true)
+      setIsPromptActive(true);
     } else {
-      setIsPromptActive(false)
+      setIsPromptActive(false);
     }
     setPaymentData({ ...paymnetData, moneyAmount: +input.current.value });
   };
 
   useEffect(() => {
     handleChange();
-
   }, [input]);
 
   return (
     <StyledInputWrapper>
-      <StyledLabel htmlFor="moneyAmount">Введите суму от 1р до 1000р</StyledLabel>
+      <StyledLabel htmlFor="moneyAmount">
+        Введите суму от 1р до 1000р
+      </StyledLabel>
       <StyledInputMoney
         ref={input}
         type="number"
