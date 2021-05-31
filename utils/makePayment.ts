@@ -25,11 +25,9 @@ export function makePayment(
   axios
     .get("/endpoint")
     .then((resp) => {
-      console.log(resp.data);
       showModal(popup, setPopup, true, router);
     })
     .catch((err) => {
-      console.log("нет ответа");
       showModal(popup, setPopup, false);
     });
 }
