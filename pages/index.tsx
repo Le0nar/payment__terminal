@@ -6,9 +6,18 @@ import {
   getOperatorsList,
   initialOperatorsList,
   addOperatorToLocalStorage,
+  deleteOperatorToLocalStorage,
 } from "../utils/operatorsList";
-import { LinkStyle, StyledUL, StyledInput, OpearotrWrapper, StyledAddBtn } from "../styles/MainPageStyles";
-import { WindowTitle } from './../styles/WindowTitleStyles';
+import {
+  LinkStyle,
+  StyledUL,
+  StyledInput,
+  OpearotrWrapper,
+  StyledAddBtn,
+  StyleOperator,
+} from "../styles/MainPageStyles";
+import { WindowTitle } from "./../styles/WindowTitleStyles";
+import { StyledDeleteBtn } from './../styles/MainPageStyles';
 
 const MianPage = () => {
   const [inputValue, setInputValue] = useState<string>("");
@@ -26,6 +35,7 @@ const MianPage = () => {
     const operator: IOperator = {
       name: inputValue,
       id: operatorsList.length + 1,
+      isRemovable: true,
     };
     setOpearatorsList([...operatorsList, operator]);
     setInputValue("");
@@ -37,12 +47,12 @@ const MianPage = () => {
       <WindowTitle>Выберите оператора</WindowTitle>
       <StyledUL>
         {operatorsList.map((el) => (
-          <li key={el.id}>
+          <StyleOperator key={el.id}>
             <Link href={`/operator/[id]`} as={`/operator/${el.id}`}>
               <LinkStyle>{el.name}</LinkStyle>
-              
             </Link>
-          </li>
+            {el.isRemovable && <StyledDeleteBtn onClick={() => deleteOperatorToLocalStorage(el, setOpearatorsList)}>Удалить</StyledDeleteBtn>}
+          </StyleOperator>
         ))}
       </StyledUL>
       <OpearotrWrapper>
