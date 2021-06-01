@@ -1,4 +1,6 @@
-import { createGlobalStyle, ThemeProvider } from 'styled-components'
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import type { AppProps } from 'next/app';
+import { ITheme } from './../interfaces/theme';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -12,13 +14,13 @@ const GlobalStyle = createGlobalStyle`
    }
 `
 
-const theme = {
+const theme: ITheme = {
   colors: {
     primary: '#545454',
   },
 }
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <GlobalStyle />
@@ -28,3 +30,4 @@ export default function App({ Component, pageProps }) {
     </>
   )
 }
+
