@@ -1,6 +1,10 @@
 import styled from "styled-components";
+import {
+  StyledComponentDiv,
+  StyledComponentPar,
+} from "../types/styled-components";
 
-export const StyledOverlay = styled.div`
+export const StyledOverlay: StyledComponentDiv = styled.div`
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -17,7 +21,7 @@ export const StyledOverlay = styled.div`
   background-color: rgba(0, 0, 0, 0.4);
 `;
 
-export const StyledPopupErrorWindow = styled.div`
+export const StyledPopupErrorWindow: StyledComponentDiv = styled.div`
   margin: auto;
   width: 300px;
   height: 300px;
@@ -26,7 +30,7 @@ export const StyledPopupErrorWindow = styled.div`
   border-radius: 13px;
   display: flex;
 `;
-export const StyledPopupSuccesWindow = styled.div`
+export const StyledPopupSuccesWindow: StyledComponentDiv = styled.div`
   margin: auto;
   width: 300px;
   height: 300px;
@@ -36,7 +40,7 @@ export const StyledPopupSuccesWindow = styled.div`
   display: flex;
 `;
 
-export const StyledPopupContent = styled.p`
+export const StyledPopupContent: StyledComponentPar = styled.p`
   margin: auto;
   color: #fff;
 `;

@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { StyledComponentDiv } from "../types/styled-components";
 
-export const Container = styled.div`
+export const Container: StyledComponentDiv = styled.div`
   max-width: 1100px;
   margin: auto;
   height: 100vh;
@@ -8,7 +9,7 @@ export const Container = styled.div`
   font-family: "Roboto", sans-serif;
 `;
 
-export const StyledWrapper = styled.div`
+export const StyledWrapper: StyledComponentDiv = styled.div`
   margin: auto;
   display: flex;
   flex-direction: column;

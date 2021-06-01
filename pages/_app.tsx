@@ -1,8 +1,9 @@
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
-import type { AppProps } from 'next/app';
-import { ITheme } from './../interfaces/theme';
+import { createGlobalStyle, ThemeProvider } from "styled-components";
+import type { AppProps } from "next/app";
+import { ITheme } from "./../interfaces/theme";
+import { StyledGlobalStyleComponent } from "../types/styled-components";
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyle: StyledGlobalStyleComponent = createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
@@ -12,13 +13,13 @@ const GlobalStyle = createGlobalStyle`
   li {
     list-style-type: none;
    }
-`
+`;
 
 const theme: ITheme = {
   colors: {
-    primary: '#545454',
+    primary: "#545454",
   },
-}
+};
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -28,6 +29,5 @@ export default function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </ThemeProvider>
     </>
-  )
+  );
 }
-
