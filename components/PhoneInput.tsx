@@ -6,6 +6,7 @@ import {
   StyledInput,
   StyledPrompt,
 } from "./../styles/OperatorPageStyles";
+import InputMask from "react-input-mask";
 
 interface PhoneInputProps {
   paymnetData: IPaymentData;
@@ -18,23 +19,13 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
   setPaymentData,
   isPromptActive,
 }) => {
-  const handleChange = (event) => {
-    let value: string = event.target.value.replace(/\D/g, "");
-    setPaymentData({ ...paymnetData, telephone: value });
-  };
-
   return (
     <StyledInputWrapper>
       <StyledLabel htmlFor="telephone">Введите номер телефона</StyledLabel>
-      <StyledInput
-        type="tel"
-        name="phone"
-        pattern="[789][0-9]{9}"
-        required
-        onChange={handleChange}
+      <InputMask
+        mask="+7 (999) 999-99-99"
         value={paymnetData.telephone}
-        id="telephone"
-        placeholder="89992223322"
+        onChange={(event) => setPaymentData({ ...paymnetData, telephone: event.target.value })}
       />
       {paymnetData.telephone !== "" && isPromptActive && (
         <StyledPrompt>Неверно заполнено поле</StyledPrompt>
