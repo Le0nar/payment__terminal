@@ -6,7 +6,7 @@ import {
   getOperatorsList,
   initialOperatorsList,
   addOperatorToLocalStorage,
-  deleteOperatorToLocalStorage,
+  deleteOperatorFromLocalStorage,
 } from "../utils/operatorsList";
 import {
   LinkStyle,
@@ -54,7 +54,7 @@ const MianPage = () => {
             {el.isRemovable && (
               <StyledDeleteBtn
                 onClick={() =>
-                  deleteOperatorToLocalStorage(el, setOpearatorsList)
+                  deleteOperatorFromLocalStorage(el, setOpearatorsList)
                 }
               >
                 Удалить

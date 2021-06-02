@@ -1,4 +1,7 @@
+import { useRouter } from "next/router";
 import React, { useRef, useEffect, useState } from "react";
+import { IPopup } from "../interfaces/popup";
+import { makePayment } from "../utils/makePayment";
 import { IPaymentData } from "./../interfaces/paymentData";
 import {
   StyledInputMoney,
@@ -8,16 +11,24 @@ import {
 } from "./../styles/OperatorPageStyles";
 
 interface MoneyInputProps {
-  paymnetData: IPaymentData;
+  paymentData: IPaymentData;
   setPaymentData: (paymentData: IPaymentData) => void;
+  popup: IPopup;
+  setPopup: (popup: IPopup) => void;
+  setIsPromptPhoneActive:(isPromptPhoneActive: boolean) => void;
 }
 
 const MoneyInput: React.FC<MoneyInputProps> = ({
-  paymnetData,
+  paymentData,
   setPaymentData,
+  popup,
+  setPopup,
+  setIsPromptPhoneActive
 }) => {
   const [isPromptActive, setIsPromptActive] = useState<boolean>(false);
   const input = useRef<HTMLInputElement>(null);
+
+  const router = useRouter();
 
   const handleChange = () => {
     const inputValue = +input.current.value;
@@ -28,12 +39,22 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
     } else {
       setIsPromptActive(false);
     }
-    setPaymentData({ ...paymnetData, moneyAmount: +input.current.value });
+    setPaymentData({ ...paymentData, moneyAmount: +input.current.value });
   };
 
   useEffect(() => {
     handleChange();
   }, [input]);
+
+  const makePaymentOnKeyDown = (event): void => {
+    if (input.current.value === "") return;
+
+    if (event.key === "Enter") {
+      event.preventDefault();
+      event.stopPropagation();
+      makePayment(paymentData, popup, setPopup, router, setIsPromptPhoneActive);
+    }
+  };
 
   return (
     <StyledInputWrapper>
@@ -46,6 +67,7 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
         onChange={handleChange}
         id="moneyAmount"
         defaultValue="250"
+        onKeyDown={makePaymentOnKeyDown}
       />
       {isPromptActive && <StyledPrompt>Некорректное значение</StyledPrompt>}
     </StyledInputWrapper>

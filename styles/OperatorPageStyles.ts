@@ -1,31 +1,50 @@
 import styled from "styled-components";
+import {
+  StyledComponentDiv,
+  StyledComponentLabel,
+  StyledComponentInput,
+  StyledComponentSpan,
+  StyledComponentLButton,
+} from "../types/styled-components";
 
-export const StyledInputWrapper = styled.div`
+export const StyledInputWrapper: StyledComponentDiv = styled.div`
   width: 100%;
   margin-bottom: 16px;
 `;
+export const StyledInputContainer: StyledComponentDiv = styled.div`
+  display: flex;
+  align-items: center;
+  
+  @media (max-width: 769px) {
+    display: block;
+  }
+`;
 
-export const StyledLabel = styled.label`
+export const StyledLabel: StyledComponentLabel = styled.label`
   padding-right: 16px;
   color: #000;
 `;
 
-export const StyledInput = styled.input`
+export const StyledInput: StyledComponentInput = styled.input`
+  margin: 8px 0px 8px 8px ;
   border: 1px solid ${({ theme }) => theme.colors.primary};
   padding: 6px 12px;
 `;
 
-export const StyledInputMoney = styled.input`
+export const StyledInputMoney: StyledComponentInput = styled.input`
   border: 1px solid ${({ theme }) => theme.colors.primary};
   padding: 6px 12px;
-  width: 170px;
+  margin: 8px 0px;
+  @media (max-width: 769px) {
+    margin-left: 25px;
+  }
 `;
 
-export const StyledPrompt = styled.span`
+export const StyledPrompt: StyledComponentSpan = styled.span`
   color: red;
 `;
 
-export const StyledSendBtn = styled.button`
+export const StyledSendBtn: StyledComponentLButton = styled.button`
   border: none;
   outline: none;
   color: #fff;

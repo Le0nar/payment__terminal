@@ -3,40 +3,41 @@ import { IPaymentData } from "./../interfaces/paymentData";
 import {
   StyledInputWrapper,
   StyledLabel,
-  StyledInput,
   StyledPrompt,
+  StyledInputContainer
 } from "./../styles/OperatorPageStyles";
+import PhoneMask from "./PhoneMask";
 
 interface PhoneInputProps {
-  paymnetData: IPaymentData;
+  paymentData: IPaymentData;
   setPaymentData: (paymentData: IPaymentData) => void;
-  isPromptActive: boolean;
+  isPromptPhoneActive :boolean;
+  setIsPromptPhoneActive:(isPromptPhoneActive: boolean) => void;
 }
 
 const PhoneInput: React.FC<PhoneInputProps> = ({
-  paymnetData,
+  paymentData,
   setPaymentData,
-  isPromptActive,
+  isPromptPhoneActive,
+  setIsPromptPhoneActive
 }) => {
-  const handleChange = (event) => {
-    let value: string = event.target.value.replace(/\D/g, "");
-    setPaymentData({ ...paymnetData, telephone: value });
-  };
 
   return (
     <StyledInputWrapper>
-      <StyledLabel htmlFor="telephone">Введите номер телефона</StyledLabel>
-      <StyledInput
-        type="tel"
-        name="phone"
-        pattern="[789][0-9]{9}"
-        required
-        onChange={handleChange}
-        value={paymnetData.telephone}
-        id="telephone"
-        placeholder="89992223322"
-      />
-      {paymnetData.telephone !== "" && isPromptActive && (
+      <StyledInputContainer>
+        <StyledLabel htmlFor="telephone">Введите номер телефона</StyledLabel>
+        <div>
+          <span>+7</span>
+          <PhoneMask
+            setPaymentData={setPaymentData}
+            paymentData={paymentData}
+            isPromptActive={isPromptPhoneActive}
+            setIsPromptActive={setIsPromptPhoneActive}
+          />
+        </div>
+      </StyledInputContainer>
+
+      {isPromptPhoneActive && (
         <StyledPrompt>Неверно заполнено поле</StyledPrompt>
       )}
     </StyledInputWrapper>

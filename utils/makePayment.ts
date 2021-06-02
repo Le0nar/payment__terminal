@@ -9,8 +9,15 @@ export function makePayment(
   parameters: IPaymentData,
   popup: IPopup,
   setPopup: Dispatch<SetStateAction<IPopup>>,
-  router: NextRouter
+  router: NextRouter,
+  setIsPromptPhoneActive:(isPromptPhoneActive: boolean) => void
 ) {
+  if (parameters.moneyAmount === 0) return;
+  if (parameters.telephone.replace(/\D/g, "").length !== 10) {
+    setIsPromptPhoneActive(true)
+    return
+  };
+
   const mock = new MockAdapter(axios);
 
   mock.onPost("/endpoint").replyOnce(200);
