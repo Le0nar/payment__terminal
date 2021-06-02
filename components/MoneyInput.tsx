@@ -8,12 +8,12 @@ import {
 } from "./../styles/OperatorPageStyles";
 
 interface MoneyInputProps {
-  paymnetData: IPaymentData;
+  paymentData: IPaymentData;
   setPaymentData: (paymentData: IPaymentData) => void;
 }
 
 const MoneyInput: React.FC<MoneyInputProps> = ({
-  paymnetData,
+  paymentData,
   setPaymentData,
 }) => {
   const [isPromptActive, setIsPromptActive] = useState<boolean>(false);
@@ -28,7 +28,7 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
     } else {
       setIsPromptActive(false);
     }
-    setPaymentData({ ...paymnetData, moneyAmount: +input.current.value });
+    setPaymentData({ ...paymentData, moneyAmount: +input.current.value });
   };
 
   useEffect(() => {

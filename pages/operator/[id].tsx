@@ -15,7 +15,7 @@ import { StyledSendBtn } from "../../styles/OperatorPageStyles";
 
 const OperatorPage = () => {
   const [operator, setOperator] = useState<IOperator>();
-  const [paymnetData, setPaymentData] = useState<IPaymentData>({
+  const [paymentData, setPaymentData] = useState<IPaymentData>({
     telephone: "",
     moneyAmount: 250,
   });
@@ -29,9 +29,9 @@ const OperatorPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const isValidTelephone: boolean = validateTelephone(paymnetData.telephone);
+    const isValidTelephone: boolean = validateTelephone(paymentData.telephone);
     setPhoneIsPromptActive(!isValidTelephone);
-  }, [paymnetData]);
+  }, [paymentData]);
 
   useEffect(() => {
     const operatorID: number = +router.query.id;
@@ -40,26 +40,26 @@ const OperatorPage = () => {
   }, [router]);
 
   const checkParameters = () => {
-    if (isPhonePromptActive || paymnetData.moneyAmount === 0) {
+    if (isPhonePromptActive || paymentData.moneyAmount === 0) {
       return;
     }
-    makePayment(paymnetData, popup, setPopup, router);
+    makePayment(paymentData, popup, setPopup, router);
   };
 
   if (!operator) {
     return <p>Loading...</p>;
   }
-
+  
   return (
     <>
       <MainLayout title={`Пополнение средств | ${operator.name}`}>
         <WindowTitle>{operator.name}</WindowTitle>
         <PhoneInput
-          paymnetData={paymnetData}
+          paymentData={paymentData}
           setPaymentData={setPaymentData}
           isPromptActive={isPhonePromptActive}
         />
-        <MoneyInput paymnetData={paymnetData} setPaymentData={setPaymentData} />
+        <MoneyInput paymentData={paymentData} setPaymentData={setPaymentData} />
         <StyledSendBtn onClick={checkParameters}>Оплатить</StyledSendBtn>
         {popup.isSuccesPopupActive && (
           <PopupWindow isSuccessfulRequest={true} />

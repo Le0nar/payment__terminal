@@ -11,6 +11,14 @@ export const StyledInputWrapper: StyledComponentDiv = styled.div`
   width: 100%;
   margin-bottom: 16px;
 `;
+export const StyledInputContainer: StyledComponentDiv = styled.div`
+  display: flex;
+  align-items: center;
+  
+  @media (max-width: 769px) {
+    display: block;
+  }
+`;
 
 export const StyledLabel: StyledComponentLabel = styled.label`
   padding-right: 16px;
@@ -18,6 +26,7 @@ export const StyledLabel: StyledComponentLabel = styled.label`
 `;
 
 export const StyledInput: StyledComponentInput = styled.input`
+  margin: 8px 0px 8px 8px ;
   border: 1px solid ${({ theme }) => theme.colors.primary};
   padding: 6px 12px;
 `;
@@ -25,7 +34,10 @@ export const StyledInput: StyledComponentInput = styled.input`
 export const StyledInputMoney: StyledComponentInput = styled.input`
   border: 1px solid ${({ theme }) => theme.colors.primary};
   padding: 6px 12px;
-  width: 170px;
+  margin: 8px 0px;
+  @media (max-width: 769px) {
+    margin-left: 25px;
+  }
 `;
 
 export const StyledPrompt: StyledComponentSpan = styled.span`

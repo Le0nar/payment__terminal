@@ -3,31 +3,36 @@ import { IPaymentData } from "./../interfaces/paymentData";
 import {
   StyledInputWrapper,
   StyledLabel,
-  StyledInput,
   StyledPrompt,
+  StyledInputContainer
 } from "./../styles/OperatorPageStyles";
-import InputMask from "react-input-mask";
+import PhoneMask from "./PhoneMask";
 
 interface PhoneInputProps {
-  paymnetData: IPaymentData;
+  paymentData: IPaymentData;
   setPaymentData: (paymentData: IPaymentData) => void;
   isPromptActive: boolean;
 }
 
 const PhoneInput: React.FC<PhoneInputProps> = ({
-  paymnetData,
+  paymentData,
   setPaymentData,
   isPromptActive,
 }) => {
   return (
     <StyledInputWrapper>
-      <StyledLabel htmlFor="telephone">Введите номер телефона</StyledLabel>
-      <InputMask
-        mask="+7 (999) 999-99-99"
-        value={paymnetData.telephone}
-        onChange={(event) => setPaymentData({ ...paymnetData, telephone: event.target.value })}
-      />
-      {paymnetData.telephone !== "" && isPromptActive && (
+      <StyledInputContainer>
+        <StyledLabel htmlFor="telephone">Введите номер телефона</StyledLabel>
+        <div>
+          <span>+7</span>
+          <PhoneMask
+            setPaymentData={setPaymentData}
+            paymentData={paymentData}
+          />
+        </div>
+      </StyledInputContainer>
+
+      {paymentData.telephone !== "" && isPromptActive && (
         <StyledPrompt>Неверно заполнено поле</StyledPrompt>
       )}
     </StyledInputWrapper>
