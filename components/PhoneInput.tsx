@@ -28,6 +28,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
           <PhoneMask
             setPaymentData={setPaymentData}
             paymentData={paymentData}
+            isPromptActive={isPromptActive}
           />
         </div>
       </StyledInputContainer>

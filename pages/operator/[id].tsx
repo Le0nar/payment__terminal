@@ -49,17 +49,25 @@ const OperatorPage = () => {
   if (!operator) {
     return <p>Loading...</p>;
   }
-  
+
   return (
     <>
       <MainLayout title={`Пополнение средств | ${operator.name}`}>
         <WindowTitle>{operator.name}</WindowTitle>
-        <PhoneInput
-          paymentData={paymentData}
-          setPaymentData={setPaymentData}
-          isPromptActive={isPhonePromptActive}
-        />
-        <MoneyInput paymentData={paymentData} setPaymentData={setPaymentData} />
+        <form>
+          <PhoneInput
+            paymentData={paymentData}
+            setPaymentData={setPaymentData}
+            isPromptActive={isPhonePromptActive}
+          />
+          <MoneyInput
+            paymentData={paymentData}
+            setPaymentData={setPaymentData}
+            popup={popup}
+            setPopup={setPopup}
+          />
+        </form>
+
         <StyledSendBtn onClick={checkParameters}>Оплатить</StyledSendBtn>
         {popup.isSuccesPopupActive && (
           <PopupWindow isSuccessfulRequest={true} />
