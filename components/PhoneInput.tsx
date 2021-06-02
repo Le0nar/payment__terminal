@@ -11,14 +11,17 @@ import PhoneMask from "./PhoneMask";
 interface PhoneInputProps {
   paymentData: IPaymentData;
   setPaymentData: (paymentData: IPaymentData) => void;
-  isPromptActive: boolean;
+  isPromptPhoneActive :boolean;
+  setIsPromptPhoneActive:(isPromptPhoneActive: boolean) => void;
 }
 
 const PhoneInput: React.FC<PhoneInputProps> = ({
   paymentData,
   setPaymentData,
-  isPromptActive,
+  isPromptPhoneActive,
+  setIsPromptPhoneActive
 }) => {
+
   return (
     <StyledInputWrapper>
       <StyledInputContainer>
@@ -28,12 +31,13 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
           <PhoneMask
             setPaymentData={setPaymentData}
             paymentData={paymentData}
-            isPromptActive={isPromptActive}
+            isPromptActive={isPromptPhoneActive}
+            setIsPromptActive={setIsPromptPhoneActive}
           />
         </div>
       </StyledInputContainer>
 
-      {paymentData.telephone !== "" && isPromptActive && (
+      {isPromptPhoneActive && (
         <StyledPrompt>Неверно заполнено поле</StyledPrompt>
       )}
     </StyledInputWrapper>

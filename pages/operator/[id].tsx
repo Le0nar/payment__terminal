@@ -7,13 +7,13 @@ import { useRouter } from "next/router";
 import { makePayment } from "../../utils/makePayment";
 import PopupWindow from "../../components/PopupWindow";
 import { IPopup } from "./../../interfaces/popup";
-import { validateTelephone } from "./../../utils/validation";
 import PhoneInput from "./../../components/PhoneInput";
 import MoneyInput from "../../components/MoneyInput";
 import { WindowTitle } from "./../../styles/WindowTitleStyles";
 import { StyledSendBtn } from "../../styles/OperatorPageStyles";
 
 const OperatorPage = () => {
+  const [isPromptPhoneActive, setIsPromptPhoneActive] = useState<boolean>()
   const [operator, setOperator] = useState<IOperator>();
   const [paymentData, setPaymentData] = useState<IPaymentData>({
     telephone: "",
@@ -23,28 +23,14 @@ const OperatorPage = () => {
     isSuccesPopupActive: false,
     isErrorPopupActive: false,
   });
-  const [isPhonePromptActive, setPhoneIsPromptActive] =
-    useState<boolean>(false);
 
   const router = useRouter();
-
-  useEffect(() => {
-    const isValidTelephone: boolean = validateTelephone(paymentData.telephone);
-    setPhoneIsPromptActive(!isValidTelephone);
-  }, [paymentData]);
 
   useEffect(() => {
     const operatorID: number = +router.query.id;
     const currentOperator: IOperator = getOperatorFromID(operatorID);
     setOperator(currentOperator);
   }, [router]);
-
-  const checkParameters = () => {
-    if (isPhonePromptActive || paymentData.moneyAmount === 0) {
-      return;
-    }
-    makePayment(paymentData, popup, setPopup, router);
-  };
 
   if (!operator) {
     return <p>Loading...</p>;
@@ -58,17 +44,19 @@ const OperatorPage = () => {
           <PhoneInput
             paymentData={paymentData}
             setPaymentData={setPaymentData}
-            isPromptActive={isPhonePromptActive}
+            isPromptPhoneActive={isPromptPhoneActive}
+            setIsPromptPhoneActive={setIsPromptPhoneActive}
           />
           <MoneyInput
             paymentData={paymentData}
             setPaymentData={setPaymentData}
             popup={popup}
             setPopup={setPopup}
+            setIsPromptPhoneActive={setIsPromptPhoneActive}
           />
         </form>
 
-        <StyledSendBtn onClick={checkParameters}>Оплатить</StyledSendBtn>
+        <StyledSendBtn onClick={() => makePayment(paymentData, popup, setPopup, router, setIsPromptPhoneActive)}>Оплатить</StyledSendBtn>
         {popup.isSuccesPopupActive && (
           <PopupWindow isSuccessfulRequest={true} />
         )}

@@ -15,6 +15,7 @@ interface MoneyInputProps {
   setPaymentData: (paymentData: IPaymentData) => void;
   popup: IPopup;
   setPopup: (popup: IPopup) => void;
+  setIsPromptPhoneActive:(isPromptPhoneActive: boolean) => void;
 }
 
 const MoneyInput: React.FC<MoneyInputProps> = ({
@@ -22,6 +23,7 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
   setPaymentData,
   popup,
   setPopup,
+  setIsPromptPhoneActive
 }) => {
   const [isPromptActive, setIsPromptActive] = useState<boolean>(false);
   const input = useRef<HTMLInputElement>(null);
@@ -46,12 +48,11 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
 
   const makePaymentOnKeyDown = (event): void => {
     if (input.current.value === "") return;
-    if (paymentData.telephone.replace(/\D/g, "").length !== 10 && true) return;
 
     if (event.key === "Enter") {
       event.preventDefault();
       event.stopPropagation();
-      makePayment(paymentData, popup, setPopup, router);
+      makePayment(paymentData, popup, setPopup, router, setIsPromptPhoneActive);
     }
   };
 
